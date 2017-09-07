@@ -29,6 +29,7 @@ class HOTP {
 
   constructor() {
     this._options = this.defaultOptions;
+    this._counter = 0;
   }
 
   /**
@@ -73,12 +74,28 @@ class HOTP {
   /**
    * Resets options to presets
    *
-   * @param {object} option object
    * @return {instance}
    */
   resetOptions() {
     this._options = this.defaultOptions;
     return this;
+  }
+
+  /**
+   * Attempts to get value from options if currentValue is null or undefined
+   *
+   * @param {*} currentValue -  the value to check
+   * @param {string} optionKey - the fallback value key from options object.
+   * @return {*}
+   */
+  formatOption(currentValue, optionKey) {
+    if (optionKey == null) {
+      return currentValue;
+    }
+    if (currentValue == null) {
+      return this.options[optionKey];
+    }
+    return currentValue;
   }
 
   /**
@@ -91,7 +108,11 @@ class HOTP {
    * @see {@link module:core/hotpToken} for more information.
    */
   generate(secret, counter) {
-    return hotpToken(secret, counter, this.options)
+    return hotpToken(
+      this.formatOption(secret, 'secret'),
+      this.formatOption(counter, 'counter'),
+      this.options
+    )
   }
 
   /**
@@ -105,7 +126,12 @@ class HOTP {
    * @see {@link module:core/hotpCheck} for more information.
    */
   check(token, secret, counter) {
-    return hotpCheck(token, secret, counter, this.options);
+    return hotpCheck(
+      token,
+      this.formatOption(secret, 'secret'),
+      this.formatOption(counter, 'counter'),
+      this.options
+    );
   }
 
   /**

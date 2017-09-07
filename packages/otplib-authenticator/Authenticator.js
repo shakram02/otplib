@@ -77,7 +77,7 @@ class Authenticator extends TOTP {
   /**
    * Generates and encodes a secret key
    *
-   * @param {string} length - secret key length (not encoded key length)
+   * @param {number} length - secret key length (not encoded key length)
    * @return {string}
    * @see {@link module:impl/authenticator/secretKey}
    * @see {@link module:impl/authenticator/encodeKey}
@@ -91,12 +91,26 @@ class Authenticator extends TOTP {
   }
 
   /**
+   * Initialize a random secret and set it to the instance
+   *
+   * @param {number} length - secret key length (not encoded key length)
+   * @return {instance}
+   */
+  initSecret(len) {
+    this.options = { secret: this.generateSecret(len) }
+    return this;
+  }
+
+  /**
    * @param {string} secret
    * @return {string}
    * @see {@link module:impl/authenticator/token}
    */
   generate(secret) {
-    return token(secret, this.options);
+    return token(
+      this.formatOption(secret, 'secret'),
+      this.options
+    );
   }
 
   /**
@@ -109,7 +123,11 @@ class Authenticator extends TOTP {
    * @see {@link module:impl/authenticator/check}
    */
   check(token, secret) {
-    return check(token, secret, this.options);
+    return check(
+      token,
+      this.formatOption(secret, 'secret'),
+      this.options
+    );
   }
 }
 
