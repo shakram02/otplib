@@ -7,12 +7,12 @@
     "build": "./scripts/build.sh",
     "build:browser": "webpack --config ./scripts/webpack.config.js",
     "build:docs": "jsdoc --configure jsdoc.json --verbose",
+    "build:rollup": "rollup -c scripts/rollup.config.js",
     "build:module": "./scripts/build-module.sh",
     "build:transpile": "babel dist --out-dir dist",
     "clean": "rimraf dist coverage docs",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "deploy-gh-pages": "./scripts/build-site.sh",
-    "deploy-package": "./scripts/build-publish.sh",
     "lint": "eslint --ext js src",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch"
