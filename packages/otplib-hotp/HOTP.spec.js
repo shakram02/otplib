@@ -45,6 +45,25 @@ describe('HOTP', function () {
     expect(prev).toEqual(lib.options);
   });
 
+  it('method: formatOption - should return currentValue when optionKey is null', function () {
+    expect(lib.formatOption('here', null)).toEqual('here');
+  });
+
+  it('method: formatOption - should return currentValue when optionKey is undefined', function () {
+    expect(lib.formatOption('here')).toEqual('here');
+  });
+
+  it('method: formatOption - should return currentValue when optionKey is not nil', function () {
+    expect(lib.formatOption('here', 'test')).toEqual('here');
+  });
+
+  it('method: formatOption - should return value from options when currentValue is nil', function () {
+    lib.options = {
+      test: 'here'
+    }
+    expect(lib.formatOption(null, 'test')).toEqual('here');
+  });
+
   it('method: resetOptions - should return options to defaults', function () {
     lib.options = {
       test: 'value'

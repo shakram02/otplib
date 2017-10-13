@@ -106,6 +106,20 @@ describe('Authenticator', function () {
     ]);
   });
 
+  it('method: check should allow secret to be set as part of options', function () {
+    check.mockImplementation(() => testValue);
+
+    lib.options = {
+      secret: 'secretOption'
+    }
+
+    const result = lib.check('token');
+    expect(result).toBe(testValue);
+    expect(check).toHaveBeenCalledTimes(1);
+    expect(check.mock.calls[0][0]).toBe('token');
+    expect(check.mock.calls[0][1]).toBe('secretOption');
+  });
+
   function methodExpectation(methodName, mockFn, args) {
     mockFn.mockImplementation(() => testValue);
 

@@ -70,8 +70,12 @@ class Authenticator extends TOTP {
   /**
    * @see {@link module:impl/authenticator/keyuri}
    */
-  keyuri(...args) {
-    return keyuri(...args);
+  keyuri(user, service, secret) {
+    return keyuri(
+      user,
+      service,
+      this.formatOption(secret, 'secret')
+    );
   }
 
   /**
@@ -88,17 +92,6 @@ class Authenticator extends TOTP {
     }
     const secret = secretKey(len, this.options);
     return encodeKey(secret);
-  }
-
-  /**
-   * Initialize a random secret and set it to the instance
-   *
-   * @param {number} length - secret key length (not encoded key length)
-   * @return {instance}
-   */
-  initSecret(len) {
-    this.options = { secret: this.generateSecret(len) }
-    return this;
   }
 
   /**

@@ -72,16 +72,6 @@ class HOTP {
   }
 
   /**
-   * Resets options to presets
-   *
-   * @return {instance}
-   */
-  resetOptions() {
-    this._options = this.defaultOptions;
-    return this;
-  }
-
-  /**
    * Attempts to get value from options if currentValue is null or undefined
    *
    * @param {*} currentValue -  the value to check
@@ -96,6 +86,16 @@ class HOTP {
       return this.options[optionKey];
     }
     return currentValue;
+  }
+
+  /**
+   * Resets options to presets
+   *
+   * @return {instance}
+   */
+  resetOptions() {
+    this._options = this.defaultOptions;
+    return this;
   }
 
   /**

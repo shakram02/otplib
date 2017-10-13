@@ -76,6 +76,7 @@
     "setupFiles": [],
     "testPathIgnorePatterns": [
       "/node_modules/",
+      "/dist/",
       "<rootDir>/scripts/*",
       "<rootDir>/tests/"
     ]
